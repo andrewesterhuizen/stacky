@@ -5,7 +5,7 @@ import Parser from "./Parser.js";
 export default class Compiler {
   compile(source) {
     const tokens = new Lexer().getTokens(source);
-    const bytecode = new Parser().parse(tokens);
-    return bytecode;
+    const instructions = new Parser().parse(tokens);
+    return instructions;
   }
 }

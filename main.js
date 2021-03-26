@@ -1,13 +1,9 @@
 import { compile } from "./stacky/stacky.js";
 
-const nPlusOneIsLessThan = compile(`
+const identity = compile(`
 push $0
-push 1
-add
-push $1
-lt
 `);
 
-const result = nPlusOneIsLessThan(1, 15);
+const result = identity(232);
 
 console.log(result);

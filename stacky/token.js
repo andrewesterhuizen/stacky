@@ -1,5 +1,6 @@
 //@ts-check
 export const tokenType = {
+  label: "LABEL",
   instruction: "INSTRUCTION",
   variable: "VARIABLE",
   integerLiteral: "INTEGER_LITERAL",

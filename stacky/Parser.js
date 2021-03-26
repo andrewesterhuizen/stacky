@@ -1,5 +1,5 @@
 // @ts-check
-import { instructions } from "./instructions.js";
+import { instructions, instructionWidths } from "./instructions.js";
 import { opcodes } from "./opcodes.js";
 import { tokenType } from "./token.js";
 
@@ -7,6 +7,7 @@ export default class Parser {
   index = 0;
   tokens = [];
   output = [];
+  labels = {};
 
   nextToken() {
     return this.tokens[++this.index];
@@ -14,6 +15,28 @@ export default class Parser {
 
   peekNextToken() {
     return this.tokens[this.index + 1];
+  }
+
+  getLabels() {
+    let currentInstruction = 0;
+    let t = this.tokens[this.index];
+
+    while (t) {
+      switch (t.type) {
+        case tokenType.label: {
+          this.labels[t.value] = currentInstruction;
+          break;
+        }
+        case tokenType.instruction: {
+          currentInstruction += instructionWidths[t.value];
+          break;
+        }
+      }
+      t = this.nextToken();
+    }
+
+    // reset token index
+    this.index = 0;
   }
 
   parseInstruction() {
@@ -59,6 +82,8 @@ export default class Parser {
 
   parse(tokens) {
     this.tokens = tokens;
+    this.getLabels();
+
     let t = this.tokens[this.index];
 
     while (t) {

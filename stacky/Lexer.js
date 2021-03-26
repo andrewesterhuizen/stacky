@@ -23,14 +23,20 @@ export default class Lexer {
     return text;
   }
 
-  getInstructionToken() {
-    let instruction = this.getTextUntilWhiteSpace();
+  getTextToken() {
+    const text = this.getTextUntilWhiteSpace();
 
-    if (!(instruction in instructions)) {
-      throw `Lexer: unknown instruction ${instruction}`;
+    // label
+    if (text.endsWith(":")) {
+      this.tokens.push(new Token(tokenType.label, text.split(":")[0]));
+      return;
     }
 
-    this.tokens.push(new Token(tokenType.instruction, instruction));
+    if (!(text in instructions)) {
+      throw `Lexer: unknown instruction ${text}`;
+    }
+
+    this.tokens.push(new Token(tokenType.instruction, text));
   }
 
   getIntegerLiteralToken() {
@@ -52,10 +58,13 @@ export default class Lexer {
     let c = this.source[this.index];
 
     while (c && c !== " " && c !== "\n") {
+      // skip space
+      if (c === " ") {
+        continue;
+      }
+
       if (/[a-zA-Z]/.test(c)) {
-        this.getInstructionToken();
-      } else if (c === " ") {
-        // skip
+        this.getTextToken();
       } else if (c === "$") {
         this.getVariableToken();
       } else {
