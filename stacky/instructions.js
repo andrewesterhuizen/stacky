@@ -19,8 +19,15 @@ class InstructionsBuilder {
   }
 }
 
-const builder = new InstructionsBuilder()
+const builder = new InstructionsBuilder();
+
+builder
   .register("push", 1)
+  .register("jump", 1)
+  .register("jumpz", 1)
+  .register("jumpnz", 1)
+  .register("swap")
+  .register("dup")
   .register("add")
   .register("sub")
   .register("mul")

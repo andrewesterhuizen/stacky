@@ -50,6 +50,43 @@ export default class VM {
         this.push(this.fetch());
         break;
 
+      case opcodes.jump: {
+        this.ip = this.fetch();
+        break;
+      }
+
+      case opcodes.jumpz: {
+        const address = this.fetch();
+        const val = this.pop();
+        if (val === 0) {
+          this.ip = address;
+        }
+        break;
+      }
+
+      case opcodes.jumpnz: {
+        const address = this.fetch();
+        const val = this.pop();
+        if (val !== 0) {
+          this.ip = address;
+        }
+        break;
+      }
+
+      case opcodes.dup: {
+        const val = this.stack[this.sp - 1];
+        this.push(val);
+        break;
+      }
+
+      case opcodes.swap: {
+        const a = this.pop();
+        const b = this.pop();
+        this.push(a);
+        this.push(b);
+        break;
+      }
+
       case opcodes.add: {
         const a = this.pop();
         const b = this.pop();

@@ -23,7 +23,7 @@ export default class Parser {
 
     while (t) {
       switch (t.type) {
-        case tokenType.label: {
+        case tokenType.labelDefinition: {
           this.labels[t.value] = currentInstruction;
           break;
         }
@@ -92,6 +92,13 @@ export default class Parser {
           this.parseInstruction();
           break;
         }
+        case tokenType.label:
+          if (!(t.value in this.labels)) {
+            throw `Parser: no definition found for label ${t.value}`;
+          }
+          const address = this.labels[t.value];
+          this.output.push(address);
+          break;
         case tokenType.integerLiteral:
           this.output.push(this.getAndCheckInt(t.value));
           break;
