@@ -1,6 +1,8 @@
+# Stacky
+
 A stack based VM and assembly mini language that can be run inside JavaScript programs
 
-# Examples
+## Examples
 
 TODO:
 
@@ -44,9 +46,9 @@ add
 const sum = addThreeNumbers(1, 2, 3);
 ```
 
-# Instructions:
+## Instructions:
 
-## Stack
+### Stack
 
 Operations for interacting with stack
 
@@ -61,7 +63,7 @@ swap ; Swaps two values from the top of the stack
 dup ; Pushes a duplicate of value on top of stack
 ```
 
-## Subroutines
+### Subroutines
 
 ```
 call my_label ; Saves return address to call stack and jump to address at label
@@ -69,7 +71,7 @@ call my_label ; Saves return address to call stack and jump to address at label
 ret ; Return from subroutine back to address where subroutine was called
 ```
 
-## Jumps
+### Jumps
 
 ```
 jump my_label; Unconditional jump to address at label
@@ -77,7 +79,7 @@ jumpz my_label; Pops value from stack and jumps if value is zero
 jumpnz my_label; Pops value from stack and jumps if value is non zero
 ```
 
-## Arithmetic
+### Arithmetic
 
 Arithmetic instructions pop the 2 top most items on the stack and perform a math operation on those items. The result of the operation is pushed back on to the stack.
 
@@ -88,7 +90,7 @@ mul ; *
 div ; /
 ```
 
-## Logic
+### Logic
 
 Logic instructions pop the 2 top most items on the stack and perform a logical comparison on those items. The values `1` or `0` are pushed back on to the stack depending on the result of the logical comparison.
 
