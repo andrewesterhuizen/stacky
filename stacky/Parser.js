@@ -109,6 +109,6 @@ export default class Parser {
       t = this.nextToken();
     }
 
-    return this.output;
+    return { instructions: this.output, entryPoint: this.labels["start"] || 0 };
   }
 }

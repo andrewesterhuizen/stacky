@@ -1,5 +1,5 @@
 // @ts-check
-import { opcodes } from "./opcodes.js";
+import { opcodeNameLookup, opcodes } from "./opcodes.js";
 
 const bit = (v) => (v ? 1 : 0);
 
@@ -9,9 +9,18 @@ export default class VM {
   variables = [];
   sp = 0;
   stack = [];
+  callStack = [];
 
-  init(instructions, variables) {
-    this.ip = 0;
+  debug = false;
+
+  log(...args) {
+    if (this.debug) {
+      console.log("VM:", ...args);
+    }
+  }
+
+  init(instructions, entryPoint, variables) {
+    this.ip = entryPoint;
     this.instructions = instructions;
     this.variables = variables;
     this.sp = 0;
@@ -35,6 +44,8 @@ export default class VM {
   }
 
   execute(instruction) {
+    this.log("executing:", opcodeNameLookup[instruction]);
+
     switch (instruction) {
       case opcodes.push_memory:
         const index = this.fetch();
@@ -48,6 +59,16 @@ export default class VM {
 
       case opcodes.push_literal:
         this.push(this.fetch());
+        break;
+
+      case opcodes.call:
+        // push return address
+        this.callStack.push(this.ip + 1);
+        this.ip = this.fetch();
+        break;
+
+      case opcodes.ret:
+        this.ip = this.callStack.pop();
         break;
 
       case opcodes.jump: {
@@ -162,8 +183,8 @@ export default class VM {
     }
   }
 
-  run(instructions, variables) {
-    this.init(instructions, variables);
+  run(instructions, entryPoint, variables) {
+    this.init(instructions, entryPoint, variables);
 
     while (this.ip < this.instructions.length) {
       this.execute(this.fetch());

@@ -23,6 +23,8 @@ const builder = new InstructionsBuilder();
 
 builder
   .register("push", 1)
+  .register("call", 1)
+  .register("ret")
   .register("jump", 1)
   .register("jumpz", 1)
   .register("jumpnz", 1)

@@ -6,8 +6,8 @@ export default class Compiler {
   compile(source) {
     const tokens = new Lexer().getTokens(source);
     console.log("tokens", tokens);
-    const instructions = new Parser().parse(tokens);
+    const { instructions, entryPoint } = new Parser().parse(tokens);
     console.log("instructions", instructions);
-    return instructions;
+    return { instructions, entryPoint };
   }
 }

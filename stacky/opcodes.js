@@ -25,6 +25,8 @@ const builder = new OpcodeTableBuilder();
 builder
   .register("push_literal")
   .register("push_memory")
+  .register("call")
+  .register("ret")
   .register("jump")
   .register("jumpz")
   .register("jumpnz")
