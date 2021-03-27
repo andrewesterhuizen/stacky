@@ -6,3 +6,5 @@ export const compile = (source) => {
   const { instructions, entryPoint } = new Compiler().compile(source);
   return (...vars) => new VM().run(instructions, entryPoint, vars);
 };
+
+export const run = (source, ...vars) => compile(source)(...vars);
