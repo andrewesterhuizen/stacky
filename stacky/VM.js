@@ -61,6 +61,10 @@ export default class VM {
         this.push(this.fetch());
         break;
 
+      case opcodes.pop:
+        this.pop();
+        break;
+
       case opcodes.call:
         // push return address
         this.callStack.push(this.ip + 1);
