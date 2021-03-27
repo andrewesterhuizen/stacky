@@ -23,6 +23,13 @@ export default class Lexer {
     return text;
   }
 
+  skipRestOfLine() {
+    let c = this.source[this.index];
+    while (c && c !== "\n") {
+      c = this.nextChar();
+    }
+  }
+
   getTextToken() {
     const text = this.getTextUntilWhiteSpace();
 
@@ -64,7 +71,9 @@ export default class Lexer {
         continue;
       }
 
-      if (/[a-zA-Z]/.test(c)) {
+      if (c == ";") {
+        this.skipRestOfLine();
+      } else if (/[a-zA-Z]/.test(c)) {
         this.getTextToken();
       } else if (c === "$") {
         this.getVariableToken();

@@ -5,17 +5,22 @@ fib:
     dup
     push 1
     lte
+    ; we want to return n only if n <= 1
     jumpz fib_after_ret
     ret
 
+    ; compute and return fib(n-1) + fib(n-2)
     fib_after_ret:
-        dup
+        dup ; saving duplicate of n for 2nd call of fib
+
+        ; fib(n-1)
         push 1
         sub
         call fib
 
-        swap
+        swap ; swap return of fib(n-1) and saved version of n from earlier
 
+        ; fib(n-2)
         push 2
         sub
         call fib
