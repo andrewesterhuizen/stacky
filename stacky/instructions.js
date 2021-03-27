@@ -34,6 +34,7 @@ builder
   .register("add")
   .register("sub")
   .register("mul")
+  .register("div")
   .register("eq")
   .register("neq")
   .register("gt")
