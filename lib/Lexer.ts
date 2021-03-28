@@ -1,17 +1,16 @@
-//@ts-check
-import { instructions } from "./instructions.js";
-import { Token, tokenType } from "./token.js";
+import { instructions } from "./instructions";
+import { Token, tokenType } from "./token";
 
 export default class Lexer {
-  index = 0;
-  source = "";
-  tokens = [];
+  private tokens: Token[] = [];
+  private index = 0;
+  private source = "";
 
-  nextChar() {
+  private nextChar() {
     return this.source[++this.index];
   }
 
-  getTextUntilWhiteSpace() {
+  private getTextUntilWhiteSpace() {
     let c = this.source[this.index];
     let text = "";
 
@@ -23,14 +22,14 @@ export default class Lexer {
     return text;
   }
 
-  skipRestOfLine() {
+  private skipRestOfLine() {
     let c = this.source[this.index];
     while (c && c !== "\n") {
       c = this.nextChar();
     }
   }
 
-  getTextToken() {
+  private getTextToken() {
     const text = this.getTextUntilWhiteSpace();
 
     // label
@@ -47,18 +46,18 @@ export default class Lexer {
     }
   }
 
-  getIntegerLiteralToken() {
+  private getIntegerLiteralToken() {
     const n = this.getTextUntilWhiteSpace();
     this.tokens.push(new Token(tokenType.integerLiteral, n));
   }
 
-  getVariableToken() {
+  private getVariableToken() {
     this.nextChar(); // skip '$'
     const n = this.getTextUntilWhiteSpace();
     this.tokens.push(new Token(tokenType.variable, n));
   }
 
-  getTokens(source) {
+  getTokens(source: string) {
     this.index = 0;
     this.source = source.trim();
 

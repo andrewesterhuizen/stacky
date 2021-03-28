@@ -1,4 +1,4 @@
-import { compile } from "./stacky/stacky.js";
+import { compile } from "./build/stacky.js";
 
 const compute_fibonacci = compile(`
 fib:

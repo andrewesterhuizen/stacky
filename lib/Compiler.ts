@@ -1,9 +1,8 @@
-//@ts-check
-import Lexer from "./Lexer.js";
-import Parser from "./Parser.js";
+import Lexer from "./Lexer";
+import Parser from "./Parser";
 
 export default class Compiler {
-  compile(source) {
+  compile(source: string) {
     const tokens = new Lexer().getTokens(source);
     console.log("tokens", tokens);
     const { instructions, entryPoint } = new Parser().parse(tokens);

@@ -14,7 +14,7 @@ TODO:
 - comments
 
 ```javascript
-import { compile } from "./stacky.js";
+import { compile } from "./stacky";
 
 // simple program
 const addNumbers = compile(`

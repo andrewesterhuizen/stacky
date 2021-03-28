@@ -1,10 +1,8 @@
-//@ts-check
-
 class InstructionsBuilder {
-  widths = {};
-  table = {};
+  widths: Record<string, number> = {};
+  table: Record<string, string> = {};
 
-  register(name, nOperands = 0) {
+  register(name: string, nOperands: number = 0) {
     this.widths[name] = 1 + nOperands;
     this.table[name] = name;
     return this;

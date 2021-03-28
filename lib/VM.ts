@@ -1,25 +1,22 @@
-// @ts-check
-import { opcodeNameLookup, opcodes } from "./opcodes.js";
-
-const bit = (v) => (v ? 1 : 0);
+import { opcodeNameLookup, opcodes } from "./opcodes";
+import { bit } from "./utils";
 
 export default class VM {
-  ip = 0;
-  instructions = [];
-  variables = [];
-  sp = 0;
-  stack = [];
-  callStack = [];
+  private ip = 0;
+  private instructions: number[] = [];
+  private variables: number[] = [];
+  private sp = 0;
+  private stack: number[] = [];
+  private callStack: number[] = [];
+  private debug = false;
 
-  debug = false;
-
-  log(...args) {
+  private log(...args: unknown[]) {
     if (this.debug) {
       console.log("VM:", ...args);
     }
   }
 
-  init(instructions, entryPoint, variables) {
+  private init(instructions: number[], entryPoint: number, variables: number[]) {
     this.ip = entryPoint;
     this.instructions = instructions;
     this.variables = variables;
@@ -27,23 +24,23 @@ export default class VM {
     this.stack = [];
   }
 
-  push(item) {
+  private push(item: number) {
     this.sp++;
     this.stack.push(item);
   }
 
-  pop() {
+  private pop() {
     this.sp--;
     return this.stack.pop();
   }
 
-  fetch() {
+  private fetch() {
     const i = this.instructions[this.ip];
     this.ip++;
     return i;
   }
 
-  execute(instruction) {
+  private execute(instruction: number) {
     this.log("executing:", opcodeNameLookup[instruction]);
 
     switch (instruction) {
@@ -187,7 +184,7 @@ export default class VM {
     }
   }
 
-  run(instructions, entryPoint, variables) {
+  run(instructions: number[], entryPoint: number, variables: number[]) {
     this.init(instructions, entryPoint, variables);
 
     while (this.ip < this.instructions.length) {

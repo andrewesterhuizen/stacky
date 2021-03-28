@@ -1,23 +1,22 @@
-// @ts-check
-import { instructions, instructionWidths } from "./instructions.js";
-import { opcodes } from "./opcodes.js";
-import { tokenType } from "./token.js";
+import { instructions, instructionWidths } from "./instructions";
+import { opcodes } from "./opcodes";
+import { Token, tokenType } from "./token";
 
 export default class Parser {
-  index = 0;
-  tokens = [];
-  output = [];
-  labels = {};
+  private index = 0;
+  private tokens: Token[] = [];
+  private output: number[] = [];
+  private labels: Record<string, number> = {};
 
-  nextToken() {
+  private nextToken() {
     return this.tokens[++this.index];
   }
 
-  peekNextToken() {
+  private peekNextToken() {
     return this.tokens[this.index + 1];
   }
 
-  getLabels() {
+  private getLabels() {
     let currentInstruction = 0;
     let t = this.tokens[this.index];
 
@@ -39,7 +38,7 @@ export default class Parser {
     this.index = 0;
   }
 
-  parseInstruction() {
+  private parseInstruction() {
     let t = this.tokens[this.index];
 
     switch (t.value) {
@@ -72,7 +71,7 @@ export default class Parser {
     }
   }
 
-  getAndCheckInt(v) {
+  private getAndCheckInt(v: string) {
     const n = parseInt(v);
     if (n.toString() === "NaN") {
       throw `Parser: invalid number: ${v}`;
@@ -80,7 +79,7 @@ export default class Parser {
     return n;
   }
 
-  parse(tokens) {
+  parse(tokens: Token[]) {
     this.tokens = tokens;
     this.getLabels();
 

@@ -1,4 +1,3 @@
-//@ts-check
 export const tokenType = {
   labelDefinition: "LABEL_DEFINITION",
   label: "LABEL",
@@ -8,7 +7,10 @@ export const tokenType = {
 };
 
 export class Token {
-  constructor(type, value) {
+  type: string;
+  value: string;
+
+  constructor(type: string, value: string) {
     this.type = type;
     this.value = value;
   }

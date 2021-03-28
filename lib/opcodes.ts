@@ -1,10 +1,9 @@
-//@ts-check
 class OpcodeTableBuilder {
-  table = {};
-  nameLookup = {};
+  table: Record<string, number> = {};
+  nameLookup: Record<string, string> = {};
   lastOpcode = 1;
 
-  register(name) {
+  register(name: string) {
     this.table[name] = this.lastOpcode;
     this.nameLookup[this.lastOpcode] = name;
     this.lastOpcode++;
