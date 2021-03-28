@@ -44,7 +44,7 @@ export default class VM {
     this.log("executing:", opcodeNameLookup[instruction]);
 
     switch (instruction) {
-      case opcodes.push_memory:
+      case opcodes.push_variable:
         const index = this.fetch();
         const value = this.variables[index];
         if (value === undefined) {

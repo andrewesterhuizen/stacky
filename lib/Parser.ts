@@ -49,7 +49,7 @@ export default class Parser {
             this.output.push(opcodes.push_literal);
             break;
           case tokenType.variable:
-            this.output.push(opcodes.push_memory);
+            this.output.push(opcodes.push_variable);
             break;
           default:
             throw `Parser: unexpected token ${nextToken.value}`;
