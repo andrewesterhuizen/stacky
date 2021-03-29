@@ -1,49 +1,107 @@
 # Stacky
 
-A stack based VM and assembly mini language that can be run inside JavaScript programs
+A stack based virtual machine and assembly language that can be compiled and run inside JavaScript programs
 
-## Examples
+## API
 
-TODO:
+### compile:
 
-- entry points
-- labels
-- jumps
-- subroutines
-- conditionals
-- comments
+The `compile` function compiles an assembly language program and returns a JavaScript function that will execute it. This function can be executed multiple times and will use a fetch stack and execution context each time it is called. The value on top of the stack at the end of execution is returned.
 
 ```javascript
-import { compile } from "./stacky";
-
-// simple program
-const addNumbers = compile(`
+const doSomeMaths = compile(`
 push 5
 push 8
 add
+dup
+mul
 `);
 
-const result = addNumbers();
+const result = doSomeMaths();
+```
 
-// with an argument
-const addOne = compile(`
-push $0
+### Run
+
+The `run` function will compile and run an assembly language program immediately. The value on top of the stack at the end of execution is returned.
+
+```javascript
+const result = run(`
+push 5
+push 8
+add
+dup
+mul
+`);
+```
+
+### Arguments
+
+A program can access data passed to the VM as arguments at the time of execution. These can be accessed using the `$` symbol followed by the 0 indexed position of the argument.
+
+```javascript
+const source = `
+push $0 ; first argument
 push 1
 add
-`);
+push $1 ; second argument
+mul
+`;
 
-const valuePlusOne = addOne(1);
+// compile and run
+const program = compile(source);
+const resultA = program(1, 2);
 
-// with multiple args
-const addThreeNumbers = compile(`
-push $0
-push $1
-add
-push $2
-add
-`);
+// run immediately
+const resultB = run(source, 3, 4);
+```
 
-const sum = addThreeNumbers(1, 2, 3);
+## Stacky Assembly Language
+
+### Programs
+
+Programs are defined as a series of instructions that tell the VM how to interact with the stack. Comments can be added by adding text following a `;` character. Any text after the `;` character is ignored by the compiler.
+
+```
+push 1
+push 2
+add ; pops the last 2, adds them and pushes the result
+```
+
+Labels are used with jump and call instructions to specify a location in the code.
+
+```
+push 1
+
+my_label:
+    push 1
+    add
+    jump my_label
+```
+
+An execution entry point can be defined by adding a `start:` label. If a start label is not defined the program will begin execution from the first instruction.
+
+```
+push 1
+
+my_label:
+    push 1
+    add
+
+start:
+    jump my_label
+```
+
+Subroutines are defined with labels and used with `call` and `ret` instructions. When a `call` instruction is executed, the VM will save the current location and start executing the instructions at the label. When a `ret` instruction is executed the VM will resume execution at the place the where the subroutine was called. Subroutines can be called from within other subroutines.
+
+```
+add_one:
+    push 1
+    add
+    ret
+
+start:
+    push 5
+    call add_one
 ```
 
 ## Instructions:
