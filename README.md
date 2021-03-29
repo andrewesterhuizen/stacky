@@ -20,7 +20,7 @@ mul
 const result = doSomeMaths();
 ```
 
-### Run
+### run
 
 The `run` function will compile and run an assembly language program immediately. The value on top of the stack at the end of execution is returned.
 
@@ -34,7 +34,7 @@ mul
 `);
 ```
 
-### Arguments
+### a2rguments
 
 A program can access data passed to the VM as arguments at the time of execution. These can be accessed using the `$` symbol followed by the 0 indexed position of the argument.
 
@@ -56,8 +56,6 @@ const resultB = run(source, 3, 4);
 ```
 
 ## Stacky Assembly Language
-
-### Programs
 
 Programs are defined as a series of instructions that tell the VM how to interact with the stack. Comments can be added by adding text following a `;` character. Any text after the `;` character is ignored by the compiler.
 
