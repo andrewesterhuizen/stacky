@@ -62,7 +62,7 @@ Programs are defined as a series of instructions that tell the VM how to interac
 ```
 push 1
 push 2
-add ; pops the last 2, adds them and pushes the result
+add ; a comment
 ```
 
 Labels are used with jump and call instructions to specify a location in the code.
