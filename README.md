@@ -1,6 +1,6 @@
 # Stacky
 
-A stack based virtual machine and assembly language that can be compiled and run inside JavaScript programs
+A stack based virtual machine and assembly language that can be assembled and run inside JavaScript programs
 
 ## API
 
@@ -34,7 +34,7 @@ mul
 `);
 ```
 
-### a2rguments
+### arguments
 
 A program can access data passed to the VM as arguments at the time of execution. These can be accessed using the `$` symbol followed by the 0 indexed position of the argument.
 
@@ -59,7 +59,7 @@ const resultB = run(source, 3, 4);
 
 Programs are defined as a series of instructions that tell the VM how to interact with the stack. Comments can be added by adding text following a `;` character. Any text after the `;` character is ignored by the compiler.
 
-```
+```assembly
 push 1
 push 2
 add ; a comment
@@ -67,7 +67,7 @@ add ; a comment
 
 Labels are used with jump and call instructions to specify a location in the code.
 
-```
+```assembly
 push 1
 
 my_label:
@@ -78,7 +78,7 @@ my_label:
 
 An execution entry point can be defined by adding a `start:` label. If a start label is not defined the program will begin execution from the first instruction.
 
-```
+```assembly
 push 1
 
 my_label:
@@ -91,7 +91,7 @@ start:
 
 Subroutines are defined with labels and used with `call` and `ret` instructions. When a `call` instruction is executed, the VM will save the current location and start executing the instructions at the label. When a `ret` instruction is executed the VM will resume execution at the place the where the subroutine was called. Subroutines can be called from within other subroutines.
 
-```
+```assembly
 add_one:
     push 1
     add
@@ -108,7 +108,7 @@ start:
 
 Operations for interacting with stack
 
-```
+```assembly
 push 5 ; Push literal value
 push $0 ; Push variable at index 0
 
@@ -121,7 +121,7 @@ dup ; Pushes a duplicate of value on top of stack
 
 ### Subroutines
 
-```
+```assembly
 call my_label ; Saves return address to call stack and jump to address at label
 
 ret ; Return from subroutine back to address where subroutine was called
@@ -129,7 +129,7 @@ ret ; Return from subroutine back to address where subroutine was called
 
 ### Jumps
 
-```
+```assembly
 jump my_label; Unconditional jump to address at label
 jumpz my_label; Pops value from stack and jumps if value is zero
 jumpnz my_label; Pops value from stack and jumps if value is non zero
@@ -139,7 +139,7 @@ jumpnz my_label; Pops value from stack and jumps if value is non zero
 
 Arithmetic instructions pop the 2 top most items on the stack and perform a math operation on those items. The result of the operation is pushed back on to the stack.
 
-```
+```assembly
 add ; +
 sub ; -
 mul ; *
@@ -150,7 +150,7 @@ div ; /
 
 Logic instructions pop the 2 top most items on the stack and perform a logical comparison on those items. The values `1` or `0` are pushed back on to the stack depending on the result of the logical comparison.
 
-```
+```assembly
 eq  ; ==
 neq ; !=
 gt  ; >

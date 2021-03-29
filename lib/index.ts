@@ -1,8 +1,8 @@
-import Compiler from "./Compiler";
+import Assembler from "./Assembler";
 import VM from "./VM";
 
 export const compile = (source: string) => {
-  const { instructions, entryPoint } = new Compiler().compile(source);
+  const { instructions, entryPoint } = new Assembler().compile(source);
   return (...vars: number[]) => new VM().run(instructions, entryPoint, vars);
 };
 
