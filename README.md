@@ -110,7 +110,7 @@ Operations for interacting with stack
 
 ```assembly
 push 5 ; Push literal value
-push $0 ; Push variable at index 0
+push $0 ; Push arg at index 0
 
 pop ; Remove value from stack. Value is discarded
 

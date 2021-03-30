@@ -2,7 +2,7 @@ import { compile } from "../index";
 
 export const identity = compile("push $0");
 
-export const pushTwoVariables = compile(`
+export const pushTwoArgs = compile(`
 push $0
 push $1
 `);

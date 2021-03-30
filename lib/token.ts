@@ -2,7 +2,7 @@ export const tokenType = {
   labelDefinition: "LABEL_DEFINITION",
   label: "LABEL",
   instruction: "INSTRUCTION",
-  variable: "VARIABLE",
+  argument: "ARGUMENT",
   integerLiteral: "INTEGER_LITERAL",
 };
 

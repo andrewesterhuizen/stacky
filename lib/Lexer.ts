@@ -51,10 +51,10 @@ export default class Lexer {
     this.tokens.push(new Token(tokenType.integerLiteral, n));
   }
 
-  private getVariableToken() {
+  private getArgumentToken() {
     this.nextChar(); // skip '$'
     const n = this.getTextUntilWhiteSpace();
-    this.tokens.push(new Token(tokenType.variable, n));
+    this.tokens.push(new Token(tokenType.argument, n));
   }
 
   getTokens(source: string) {
@@ -75,7 +75,7 @@ export default class Lexer {
       } else if (/[a-zA-Z]/.test(c)) {
         this.getTextToken();
       } else if (c === "$") {
-        this.getVariableToken();
+        this.getArgumentToken();
       } else {
         this.getIntegerLiteralToken();
       }

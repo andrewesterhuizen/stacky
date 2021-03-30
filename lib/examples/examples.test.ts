@@ -8,7 +8,7 @@ import {
   lessThanOrEqual,
   notEqual,
 } from "./logic";
-import { dup, identity, pushTwoVariables, swap } from "./stack";
+import { dup, identity, pushTwoArgs, swap } from "./stack";
 
 const randomInt = (max: number) => Math.floor(Math.random() * max);
 
@@ -19,8 +19,8 @@ describe("examples", () => {
       expect(identity(n)).toBe(n);
     });
 
-    test("pushTwoVariables", () => {
-      expect(pushTwoVariables(randomInt(10000), n)).toBe(n);
+    test("pushTwoArgs", () => {
+      expect(pushTwoArgs(randomInt(10000), n)).toBe(n);
     });
 
     test("swap", () => {

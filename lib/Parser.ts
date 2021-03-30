@@ -48,8 +48,8 @@ export default class Parser {
           case tokenType.integerLiteral:
             this.output.push(opcodes.push_literal);
             break;
-          case tokenType.variable:
-            this.output.push(opcodes.push_variable);
+          case tokenType.argument:
+            this.output.push(opcodes.push_argument);
             break;
           default:
             throw `Parser: unexpected token ${nextToken.value}`;
@@ -101,7 +101,7 @@ export default class Parser {
         case tokenType.integerLiteral:
           this.output.push(this.getAndCheckInt(t.value));
           break;
-        case tokenType.variable:
+        case tokenType.argument:
           this.output.push(this.getAndCheckInt(t.value));
           break;
       }

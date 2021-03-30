@@ -4,7 +4,7 @@ import { bit } from "./utils";
 export default class VM {
   private ip = 0;
   private instructions: number[] = [];
-  private variables: number[] = [];
+  private arguments: number[] = [];
   private sp = 0;
   private stack: number[] = [];
   private callStack: number[] = [];
@@ -16,10 +16,10 @@ export default class VM {
     }
   }
 
-  private init(instructions: number[], entryPoint: number, variables: number[]) {
+  private init(instructions: number[], entryPoint: number, args: number[]) {
     this.ip = entryPoint;
     this.instructions = instructions;
-    this.variables = variables;
+    this.arguments = args;
     this.sp = 0;
     this.stack = [];
   }
@@ -44,11 +44,11 @@ export default class VM {
     this.log("executing:", opcodeNameLookup[instruction]);
 
     switch (instruction) {
-      case opcodes.push_variable:
+      case opcodes.push_argument:
         const index = this.fetch();
-        const value = this.variables[index];
+        const value = this.arguments[index];
         if (value === undefined) {
-          throw `VM: no variable defined at index ${index}`;
+          throw `VM: no argument defined at index ${index}`;
         }
 
         this.push(value);
@@ -184,8 +184,8 @@ export default class VM {
     }
   }
 
-  run(instructions: number[], entryPoint: number, variables: number[]) {
-    this.init(instructions, entryPoint, variables);
+  run(instructions: number[], entryPoint: number, args: number[]) {
+    this.init(instructions, entryPoint, args);
 
     while (this.ip < this.instructions.length) {
       this.execute(this.fetch());

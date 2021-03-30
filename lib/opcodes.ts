@@ -23,7 +23,7 @@ const builder = new OpcodeTableBuilder();
 
 builder
   .register("push_literal")
-  .register("push_variable")
+  .register("push_argument")
   .register("pop")
   .register("call")
   .register("ret")
